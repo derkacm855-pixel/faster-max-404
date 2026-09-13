@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>⚡「FΛSTΞR MΛX」⚡404</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;color:white;background:#05000d;min-height:100vh;background-image:radial-gradient(circle at 20% 20%,#00ffff25,transparent 30%),radial-gradient(circle at 80% 70%,#ff00ff25,transparent 30%)}
+header{text-align:center;padding:35px 15px 20px}.logo{font-size:clamp(27px,7vw,55px);font-weight:900;text-shadow:0 0 8px #0ff,0 0 20px #0ff,0 0 35px #f0f;letter-spacing:2px}.sub{color:#aaffff;margin-top:8px}
+nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:10px}button{cursor:pointer;color:white;background:#081522;border:1px solid #00ffff;border-radius:14px;padding:11px 17px;font-weight:bold;box-shadow:0 0 12px #00ffff55}
+button:hover{box-shadow:0 0 22px #00ffffaa}.wrap{max-width:950px;margin:auto;padding:15px}.card{background:#080817dd;border:1px solid #ff00ff66;border-radius:22px;padding:24px;margin-bottom:20px;box-shadow:0 0 25px #ff00ff22}
+h2{color:#9fffff;text-shadow:0 0 12px #0ff}.balance{font-size:32px;font-weight:900;color:#ffe600;text-shadow:0 0 12px #ffe600}
+.products,.tasks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}.product,.task{padding:20px;border:1px solid #00ffff55;border-radius:17px;background:#050b16}.product{text-align:center}.icon{font-size:50px}.price{color:#ffe600;font-size:21px;margin:12px}
+.task{display:flex;align-items:center;gap:10px;justify-content:space-between}.task b{color:#ffe600}.message{margin-top:15px;padding:14px;border:1px solid #0ff;border-radius:14px;background:#062020;color:#cfffff}.info{color:#bdc8d8;line-height:1.55}
+@media(max-width:600px){.task{flex-wrap:wrap}.task button{width:100%}}
+</style>
+</head>
+<body>
+<header><div class="logo">⚡「FΛSTΞR MΛX」⚡404</div><div class="sub">NEON TOKEN SHOP</div></header>
+<nav>
+<button onclick="page('home')">⚡ Головна</button>
+<button onclick="page('tokens')">🪙 Токени</button>
+<button onclick="page('shop')">🛒 Магазин</button>
+</nav>
+<main class="wrap">
+<section id="home" class="card"><h2>⚡ Вітаємо!</h2><p class="info">Ласкаво просимо до неонового сайту <b>FΛSTΞR MΛX ⚡404</b>.<br><br>У вкладці <b>🪙 Токени</b> можна отримувати валюту та виконувати завдання.</p></section>
+
+<section id="tokens" class="card" style="display:none">
+<h2>🪙 Токени</h2>
+<p class="info">Твій баланс:</p><div class="balance" id="balance">0 🪙</div><br>
+<h2>🎁 Як отримати токени?</h2>
+<button onclick="bonus()">🎁 Щоденний бонус +5 🪙</button>
+<div id="bonusmsg"></div><br>
+<h2>📋 Завдання</h2>
+<div class="tasks">
+<div class="task"><span>📅 Зайти на сайт</span><b>+1 🪙</b><button onclick="task('visit',1)">ВИКОНАТИ</button></div>
+<div class="task"><span>📰 Переглянути новину</span><b>+2 🪙</b><button onclick="task('news',2)">ВИКОНАТИ</button></div>
+<div class="task"><span>⚡ Завдання дня</span><b>+5 🪙</b><button onclick="task('day',5)">ВИКОНАТИ</button></div>
+<div class="task"><span>👥 Запросити друга</span><b>+10 🪙</b><button onclick="task('friend',10)">ВИКОНАТИ</button></div>
+<div class="task"><span>🎮 Спеціальне завдання</span><b>+10 🪙</b><button onclick="task('special',10)">ВИКОНАТИ</button></div>
+</div><div id="taskmsg"></div>
+</section>
+
+<section id="shop" class="card" style="display:none">
+<h2>🛒 Магазин</h2><p class="info">Баланс: <span class="balance" id="shopBalance">0 🪙</span></p>
+<div class="products">
+<div class="product"><div class="icon">🎨</div><h3>Стікерпак</h3><div class="price">10 🪙</div><button onclick="buy('Стікерпак',10)">КУПИТИ</button></div>
+<div class="product"><div class="icon">🖼️</div><h3>Іконка</h3><div class="price">15 🪙</div><button onclick="buy('Іконка',15)">КУПИТИ</button></div>
+</div><div id="buymsg"></div>
+</section>
+</main>
+<script>
+let tokens=Number(localStorage.getItem('tokens')||0);
+let done=JSON.parse(localStorage.getItem('done')||'{}');
+function update(){document.getElementById('balance').textContent=tokens+' 🪙';document.getElementById('shopBalance').textContent=tokens+' 🪙';localStorage.setItem('tokens',tokens)}
+function page(id){['home','tokens','shop'].forEach(x=>document.getElementById(x).style.display=x===id?'block':'none');update()}
+function today(){return new Date().toISOString().slice(0,10)}
+function bonus(){let k='bonus_'+today();if(done[k]){bonusmsg.innerHTML='<div class="message">⏳ Бонус уже отримано сьогодні.</div>';return}done[k]=1;tokens+=5;localStorage.setItem('done',JSON.stringify(done));update();bonusmsg.innerHTML='<div class="message">🎉 +5 🪙 отримано!</div>'}
+function task(id,n){let k=id+'_'+today();if(done[k]){taskmsg.innerHTML='<div class="message">⏳ Це завдання вже виконано сьогодні.</div>';return}done[k]=1;tokens+=n;localStorage.setItem('done',JSON.stringify(done));update();taskmsg.innerHTML='<div class="message">✅ Виконано! +'+n+' 🪙</div>'}
+function buy(item,cost){if(tokens<cost){buymsg.innerHTML='<div class="message">❌ Недостатньо токенів.</div>';return}tokens-=cost;update();buymsg.innerHTML='<div class="message">✅ «'+item+'» придбано!<br><br>Для отримання замовлення напиши адміністратору у Viber.</div>'}
+update();
+</script>
+</body>
+</html>
